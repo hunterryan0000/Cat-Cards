@@ -3,6 +3,8 @@ package com.techelevator.controller;
 import com.techelevator.dao.CatCardDao;
 import com.techelevator.model.CatCard;
 import com.techelevator.model.CatCardNotFoundException;
+import com.techelevator.model.CatFact;
+import com.techelevator.model.CatPic;
 import com.techelevator.services.CatFactService;
 import com.techelevator.services.CatPicService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,7 @@ import java.util.List;
 import java.util.Random;
 
 @RestController
-@RequestMapping("/cards")
+@RequestMapping("api/cards")
 public class CatController {
 
     @Autowired
@@ -42,7 +44,14 @@ public class CatController {
 
     @RequestMapping( path = "/random", method = RequestMethod.GET )
     public CatCard random() {
-        return cardDao.list().get(new Random().nextInt(cardDao.list().size()));
+        CatCard newCard = new CatCard();
+//        //return cardDao.list().get(new Random().nextInt(cardDao.list().size()));
+//        newCard.setImgUrl(catPicService.getPic());
+        CatPic catPic =  catPicService.getPic();
+        newCard.setImgUrl(catPic.getFile());
+        CatFact catFact = catFactService.getFact();
+        newCard.setCatFact(catFact.getText());
+        return newCard;
     }
 
     @ResponseStatus(HttpStatus.CREATED)
