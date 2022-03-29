@@ -1,4 +1,4 @@
-# Week 7 Pair Exercises: Cat Cards
+# Cat Cards
 
 ## Context
 
